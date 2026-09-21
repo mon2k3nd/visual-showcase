@@ -37,6 +37,9 @@ export const Route = createFileRoute("/")({
 });
 
 const photos = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
+const newPhotos = [n1.url, n2.url, n3.url, n4.url, n5.url, n6.url, n7.url, n8.url, n9.url, n10.url];
+const gallery = [...photos.slice(2), ...newPhotos];
+const strip = [n1.url, n4.url, n5.url, n6.url, n8.url, n9.url, n2.url, n3.url];
 const weddingDate = new Date("2026-10-03T10:00:00+07:00").getTime();
 
 function IconButton({ label, onClick, children, className = "" }: { label: string; onClick: () => void; children: React.ReactNode; className?: string }) {
