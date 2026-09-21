@@ -27,6 +27,9 @@ const photos = [
   { src: photo10.url, alt: "Thảo My và Xuân Tú dịu dàng bên nhau", ratio: "portrait" },
 ] as const;
 
+const gentlePhotos = photos.slice(1, 4);
+const albumPhotos = [photos[4], photos[5], photos[6], photos[8], photos[0]];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -89,6 +92,8 @@ function WeddingPage() {
     };
   }, [selected]);
 
+  const activePhoto = selected === null ? null : (photos[selected] ?? photos[0]);
+
   return (
     <main className="overflow-x-hidden bg-background text-foreground">
       <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-6 text-hero-foreground md:px-12 md:py-8">
@@ -137,9 +142,9 @@ function WeddingPage() {
             <p className="max-w-xs leading-7 text-muted-foreground">Tình yêu hiện diện trong những khoảnh khắc nhỏ nhất, tự nhiên nhất.</p>
           </div>
           <div className="grid grid-cols-2 gap-3 md:grid-cols-12 md:gap-6">
-            {[1, 2, 3].map((photoIndex, index) => (
-              <button key={photoIndex} type="button" onClick={() => setSelected(photoIndex)} data-reveal className={`reveal gallery-button ${index === 0 ? "col-span-2 md:col-span-5" : index === 1 ? "md:col-span-3 md:mt-24" : "md:col-span-4 md:mt-10"}`} aria-label={`Mở ảnh ${photoIndex + 1}`}>
-                <img src={photos[photoIndex].src} alt={photos[photoIndex].alt} className="image-cover" loading="lazy" />
+            {gentlePhotos.map((photo, index) => (
+              <button key={photo.src} type="button" onClick={() => setSelected(index + 1)} data-reveal className={`reveal gallery-button ${index === 0 ? "col-span-2 md:col-span-5" : index === 1 ? "md:col-span-3 md:mt-24" : "md:col-span-4 md:mt-10"}`} aria-label={`Mở ảnh ${index + 2}`}>
+                <img src={photo.src} alt={photo.alt} className="image-cover" loading="lazy" />
               </button>
             ))}
           </div>
@@ -160,9 +165,9 @@ function WeddingPage() {
           <p className="hidden max-w-xs text-right text-sm leading-6 text-muted-foreground md:block">Chạm vào từng bức ảnh để xem trọn vẹn khoảnh khắc.</p>
         </div>
         <div className="gallery-grid">
-          {[4, 5, 6, 8, 0].map((photoIndex, index) => (
-            <button key={photoIndex} type="button" onClick={() => setSelected(photoIndex)} data-reveal className={`reveal gallery-button gallery-item-${index + 1}`} aria-label={`Mở ảnh ${photoIndex + 1}`}>
-              <img src={photos[photoIndex].src} alt={photos[photoIndex].alt} className="image-cover" loading="lazy" />
+          {albumPhotos.map((photo, index) => (
+            <button key={photo.src} type="button" onClick={() => setSelected([4, 5, 6, 8, 0][index] ?? 0)} data-reveal className={`reveal gallery-button gallery-item-${index + 1}`} aria-label={`Mở ảnh ${index + 1}`}>
+              <img src={photo.src} alt={photo.alt} className="image-cover" loading="lazy" />
               <span className="gallery-number">0{index + 1}</span>
             </button>
           ))}
@@ -196,11 +201,11 @@ function WeddingPage() {
         <p className="font-display text-2xl">Thảo My & Xuân Tú</p>
       </footer>
 
-      {selected !== null && (
+      {selected !== null && activePhoto && (
         <div className="lightbox" role="dialog" aria-modal="true" aria-label="Xem ảnh cưới">
           <Button variant="ghost" size="icon" className="lightbox-close" onClick={() => setSelected(null)} aria-label="Đóng ảnh"><X /></Button>
           <Button variant="ghost" size="icon" className="lightbox-prev" onClick={() => setSelected((selected + photos.length - 1) % photos.length)} aria-label="Ảnh trước"><ChevronLeft /></Button>
-          <img src={photos[selected].src} alt={photos[selected].alt} className="max-h-[88svh] max-w-[88vw] object-contain" />
+          <img src={activePhoto.src} alt={activePhoto.alt} className="max-h-[88svh] max-w-[88vw] object-contain" />
           <Button variant="ghost" size="icon" className="lightbox-next" onClick={() => setSelected((selected + 1) % photos.length)} aria-label="Ảnh sau"><ChevronRight /></Button>
           <p className="absolute bottom-5 text-xs tracking-[0.2em] text-lightbox-foreground/70">{String(selected + 1).padStart(2, "0")} / {photos.length}</p>
         </div>
