@@ -12,6 +12,16 @@ import img6 from "@/assets/TVT01187.JPG";
 import img7 from "@/assets/TVT01136.JPG";
 import img8 from "@/assets/TVT01066.JPG";
 import img9 from "@/assets/TVT01057.JPG";
+import n1 from "@/assets/TVT00593.JPG.asset.json";
+import n2 from "@/assets/TVT00610.JPG.asset.json";
+import n3 from "@/assets/TVT00661.JPG.asset.json";
+import n4 from "@/assets/TVT00690.JPG.asset.json";
+import n5 from "@/assets/TVT00701.JPG.asset.json";
+import n6 from "@/assets/TVT00726.JPG.asset.json";
+import n7 from "@/assets/TVT00743.JPG.asset.json";
+import n8 from "@/assets/TVT00744.JPG.asset.json";
+import n9 from "@/assets/TVT00792.JPG.asset.json";
+import n10 from "@/assets/TVT00576.JPG.asset.json";
 import music from "@/assets/leDuong.mp3";
 
 export const Route = createFileRoute("/")({
@@ -27,6 +37,9 @@ export const Route = createFileRoute("/")({
 });
 
 const photos = [img1, img2, img3, img4, img5, img6, img7, img8, img9];
+const newPhotos = [n1.url, n2.url, n3.url, n4.url, n5.url, n6.url, n7.url, n8.url, n9.url, n10.url];
+const gallery = [...photos.slice(2), ...newPhotos];
+const strip = [n1.url, n4.url, n5.url, n6.url, n8.url, n9.url, n2.url, n3.url];
 const weddingDate = new Date("2026-10-03T10:00:00+07:00").getTime();
 
 function IconButton({ label, onClick, children, className = "" }: { label: string; onClick: () => void; children: React.ReactNode; className?: string }) {
